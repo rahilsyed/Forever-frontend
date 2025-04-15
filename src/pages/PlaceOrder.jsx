@@ -52,7 +52,7 @@ const PlaceOrder = () => {
                             orderItems.push(itemInfo);
                         }
                     }
-                }
+                }//lets go
             }
             console.log(orderItems); // Log the final orderItems array
 
