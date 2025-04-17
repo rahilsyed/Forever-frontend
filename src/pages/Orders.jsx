@@ -25,7 +25,7 @@ const Orders = () => {
           order.items.map((item) => {
             item['status'] = order.status
             item['payment'] = order.payment
-            item['paymentMethod'] = order.paymentMethod
+            item['paymentMethod'] = order.paymentMode
             item['date'] = order.date
             allOrdersItem.push(item)
           })

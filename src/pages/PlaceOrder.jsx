@@ -1,4 +1,3 @@
-// Import necessary components and hooks
 import Title from "../components/Title";
 import CartTotal from "../components/CartTotal";
 import { assets } from "../assets/assets";
@@ -8,7 +7,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 
 const PlaceOrder = () => {
-    // State to manage the selected payment method
+    
     const [method, setMethod] = useState('cod');
     const { navigate, backendUrl, token, cartItems, setCartItems, getCartAmount, delivery_fee, products } = useContext(ShopContext);
     const [formData, setFormData] = useState({
@@ -30,16 +29,21 @@ const PlaceOrder = () => {
 
     };
 
+
     const onSubmitHandler = async (event) => {
         event.preventDefault();
+        
+        if(localStorage.getItem("token")){
+            toast.info("Please Login to Continue ")
+        }
         try {
             if (Object.keys(cartItems).length === 0) {
           
                 toast.error('Your cart is empty. Please add items to proceed.');
-                return; // Exit the function early
+                return;
             }
 
-            console.log('Cart Items:', cartItems); // Log the cartItems structure
+            console.log('Cart Items:', cartItems); 
             let orderItems = []
 
             for (const items in cartItems) {
@@ -52,9 +56,9 @@ const PlaceOrder = () => {
                             orderItems.push(itemInfo);
                         }
                     }
-                }//lets go
+                }
             }
-            console.log(orderItems); // Log the final orderItems array
+            console.log(orderItems);
 
             let orderData = {
                 address: formData,
@@ -76,22 +80,19 @@ const PlaceOrder = () => {
                     break;
 
                 case 'stripe':
-                    const responseStripe = await axios.post(backendUrl + '/api/order/stripe', orderData, { headers: { token } })
+                    const responseStripe = await axios.post(backendUrl + '/api/orders/stripe', orderData, { headers: { token } })
                     console.log(responseStripe.data);
                     if (responseStripe.data.success) {
                         const { session_url } = responseStripe.data;
                         window.location.replace(session_url);
-
+                        
                     } else {
                         toast.error(responseStripe.data.message);
                     }
-
                     break;
-
                 default:
                     break
             }
-
         } catch (error) {
             console.log(error);
             toast.error(error.message);

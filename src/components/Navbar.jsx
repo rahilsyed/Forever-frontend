@@ -2,11 +2,15 @@ import React, { useContext, useState } from 'react';
 import { assets } from '../assets/assets';
 import { NavLink, Link } from 'react-router-dom';
 import { ShopContext } from '../context/ShopContext';
-
+import { useNavigate } from 'react-router-dom';
+  
 const Navbar = () => {
   const [visible, setVisible] = useState(false);
   const { setShowSearch, getCartCount,   } = useContext(ShopContext);
-
+  const handleLogout =()=>{
+    localStorage.removeItem("token");
+    window.location.assign("/login")
+  }
   return (
     <div className='flex items-center justify-between py-5 font-medium'>
       <Link to='/'>
@@ -57,7 +61,7 @@ const Navbar = () => {
                 {' '}
                 <p className='cursor-pointer hover:text-black '>Orders</p>
               </NavLink>
-              <p className='cursor-pointer hover:text-black '>Logout</p>
+              <p className='cursor-pointer hover:text-black ' onClick={handleLogout}>Logout</p>
             </div>
           </div>
         </div>
