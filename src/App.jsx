@@ -11,6 +11,7 @@ import Login from './pages/Login'
 import PlaceOrder from './pages/PlaceOrder'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
+import NotFound from './components/NotFound'
 import 'react-toastify/dist/ReactToastify.css'
 import Verify from './pages/verify'
 
@@ -30,7 +31,7 @@ const App = () => {
         <Route path='/login' element={<Login />} />
         <Route path='/place-order' element={<PlaceOrder />} />
         <Route path='/verify' element={<Verify />} />
-
+        <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer/>
     </div>
